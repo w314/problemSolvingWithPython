@@ -1,13 +1,11 @@
-# Problem 4
+# Problem 4 - Dutch National Flag Problem
 
 ### Time Complexity: `O(n)`
 ### Space Complexity: `O(1)`
-### Algorithm Used: `recursion`
+### Algorithm Used: `loops`
 
 ### Explanation
 
-`Time complexity`: In the worst case when looking for a non_existent user the algorithm has to go trough all users and subgroups once. Therefore time comlexity is linear `O(n)`, depends on the size of groups and users we search through.
+`Time complexity`: I have used a while loop to traverse the input_list, while keeping track the last indexes of '0's and '2's. This way had to traverse the list only once, with time complexity: `O(n)` .
 
-`Space complexity:` There are no extra space requeirements.
-
-I have used recursion as it made it possible for me to write a simple code. The task demanded to do the same subtasks (checking users and subgroups) again and again down the hieararchy. Recursion was a good fit for the task.
+`Space complexity:` I have rearranged the list in place resulting in a constant space complexity: `O(1)`.

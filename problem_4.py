@@ -1,99 +1,102 @@
-# provided by udacity
-class Group(object):
-    def __init__(self, _name):
-        self.name = _name
-        self.groups = []
-        self.users = []
+def sort_012(input_list):
+    """
+    Given an input input_listay consisting on only 0, 1, and 2, sort the input_listay in a single traversal.
 
-    def add_group(self, group):
-        self.groups.append(group)
+    Args:
 
-    def add_user(self, user):
-        self.users.append(user)
-
-    def get_groups(self):
-        return self.groups
-
-    def get_users(self):
-        return self.users
-
-    def get_name(self):
-        return self.name
-
-
-# function returns if user is part of a group or not
-def is_user_in_group(user, group):
+       input_list(list): List to be sorted
+    """
     
-    in_group = False
+    # if lenght of array is 1 or smaller it's already sorted, return array
+    if len(input_list) <= 1:
+        return input_list
+        
+    # to keep track of the next index to place a '0'
+    next0 = 0
     
-    # check users in group
-    group_users = group.get_users()
-    for group_user in group_users:
-        if group_user == user:
-            return True
+    # to keep track of the next index to place a '2'
+    next2 = len(input_list) - 1
     
-    # check subgroups
-    sub_groups = group.get_groups()
-    for sub_group in sub_groups:
-        in_group =  is_user_in_group(user, sub_group)
+    # current index 
+    index = 0
     
-    return in_group
+    # when current index reaches next2 that's the last element to process
+    while index <= next2:
+        # current number to process
+        num = input_list[index]
+        
+        # if the number is 1 nothing has to happen
+        
+        # if the number is '0' replace it with the number at the next0
+        # it will be either a '0' if we are processing a first element and swapping it with itself
+        # or it will be a '1', so no further actions needed
+        if num == 0:
+            # swap values
+            input_list[index], input_list[next0] = input_list[next0], input_list[index]
+            # increase next0 index
+            next0 += 1
+        # if the number to process is '2' it has to be moved to the next2 index    
+        elif num == 2:
+            # if number at next2 index is '2', set next2 to the first element not a '2'
+            while input_list[next2] == 2:
+                next2 -=1
+                # if in the meantime we reach index it means our array is already sorted
+                if next2 == index:
+                    return input_list
+            # swap out '2' to the value found at next2 place
+            input_list[index], input_list[next2] = input_list[next2], input_list[index]
+            # decrease next2 index
+            next2 -= 1
+            # if the number at the next2 place was a 0 move it the next0 index
+            if input_list[index] == 0:
+                # swap with next0
+                input_list[index], input_list[next0] = input_list[next0], input_list[index]
+                # increase next0 index
+                next0 += 1                
+        # increase index to process the next element in input_list    
+        index += 1
+        
+    return input_list
 
 
+    print('TESTING PROBLEM 4 (Dutch National Flag Problem)')
 
-# TESTING is_user_in_group
-print('\nTESTING is_user_in_group')
-
-# setting up groups and users for testing
-# create groups
-food = Group('food')
-colors = Group('colors')
-fruits = Group('fruits')
-vegetables = Group('vegetables')
-salads = Group('salads')
-
-# create subgroups
-food.add_group(fruits)
-food.add_group(vegetables)
-vegetables.add_group(salads)
-
-# create users
-food.add_user('pancake')
-colors.add_user('green')
-vegetables.add_user('pumpkin')
-salads.add_user('kale')
-salads.add_user('spinach')
-
-
-# Test Case 1
 print('\nTest Case 1')
-print('testing non-existent user')
-user = 'dog'
-group = food
-print(is_user_in_group(user, group))
-# returns False
+print('testing empty array')
+arr = []
+print('input array: ', arr)
+sorted_array = sort_012(arr)
+print('sorted array: ', sorted_array)
+# returns []
 
-# Test Case 2
+print('\nTest Case 1')
+print('testing array with one element')
+arr = [0]
+print('input array: ', arr)
+sorted_array = sort_012(arr)
+print('sorted array: ', sorted_array)
+# returns [0]
+
 print('\nTest Case 2')
-print('testing a direct user of a group')
-user = 'pancake'
-group = food
-print(is_user_in_group(user, group))
-# returns True
+print('testing array with "2"s only')
+arr = [2, 2, 2]
+print('input array: ', arr)
+sorted_array = sort_012(arr)
+print('sorted array: ', sorted_array)
+# returns [2, 2, 2]
 
-# Test Case 3
 print('\nTest Case 3')
-print('testing a user of a subgroup')
-user = 'kale'
-group = food
-print(is_user_in_group(user, group))
-# returns True
+print('testing already sorted array')
+arr = [0, 0, 1, 1, 2, 2]
+print('input array: ', arr)
+sorted_array = sort_012(arr)
+print('sorted array: ', sorted_array)
+# returns [0, 0, 1, 1, 2, 2]
 
-# Test Case 4
 print('\nTest Case 4')
-print('testing a valid user not part of the group passed as the parameter')
-user = 'kale'
-group = fruits
-print(is_user_in_group(user, group))
-# returns False
-
+print('testing unsorted array')
+arr = [2, 1, 2, 0, 0, 2, 1, 0, 1, 0, 0, 2, 2, 2, 1, 2, 0, 0, 0, 2, 1, 0, 2, 0, 0, 1]
+print('input array: ', arr)
+sorted_array = sort_012(arr)
+print('sorted array: ', sorted_array)
+# returns [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2]
