@@ -3,7 +3,7 @@
 The scripts in here are solving the following problems with python. See deatailed problem description below:
 
 1. Design a Least Recently Used Cache
-2.
+2. Find files in all subdirectories that end with '.c'
 3.
 4.
 5.
@@ -42,3 +42,7 @@ our_cache.get(3)      # returns -1
 # because the cache reached it's capacity
 # and 3 was the least recently used entry
 ```
+
+## Problem 2 - Find files
+
+Write code for finding all files under a directory (and all directories beneath it) that end with ".c"
